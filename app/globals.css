@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Code block styles */
+[data-rehype-pretty-code-figure] {
+  @apply my-8;
+}
+
+[data-rehype-pretty-code-figure] pre {
+  @apply rounded-lg overflow-x-auto text-sm leading-6;
+  padding: 0.75rem 1rem;
+}
+
+[data-rehype-pretty-code-figure] code {
+  @apply grid;
+  counter-reset: line;
+  padding: 0;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  @apply border-l-2 border-l-transparent px-4;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+  @apply border-l-primary bg-primary/10;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-chars] {
+  @apply bg-primary/10 rounded;
+}
+
+[data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+  @apply text-xs text-muted-foreground mr-4;
+  counter-increment: line;
+  content: counter(line);
+}
+
+/* Inline code styles */
+:not(pre) > code {
+  @apply bg-muted px-1.5 py-0.5 rounded-md text-sm font-mono;
+}
+
+.nav-link {
+  @apply inline-block text-[9pt] font-extrabold tracking-wide;
+  @apply transition duration-300 ease-in-out;
+  @apply bg-neutral-900/50 text-neutral-400;
+  border-radius: 10px;
+}
+
+.nav-link button {
+  @apply inline-block whitespace-nowrap;
+  padding: 3px 16px;
+}
+
+.nav-link.home:hover, .nav-link.home.active {
+  @apply text-black bg-pink-400;
+}
+
+.nav-link.projects:hover, .nav-link.projects.active {
+  @apply text-black bg-yellow-400;
+}
+
+.nav-link.blog:hover, .nav-link.blog.active {
+  @apply text-black bg-green-400;
+}
+
+.nav-link.contact:hover, .nav-link.contact.active {
+  @apply text-black bg-blue-400;
+}
