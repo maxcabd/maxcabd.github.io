@@ -19,7 +19,7 @@ export function HeroSection() {
       className="space-y-6"
     >
       <h1 className="text-5xl font-extrabold tracking-tight">
-        Hi, I'm{" "}
+        Hi, I&apos;m{" "}
         <span className="bg-gradient-to-r from-pink-600 via-blue-600 to-green-500 text-transparent bg-clip-text">
           Mohamed
         </span>
@@ -34,7 +34,7 @@ export function HeroSection() {
           { icon: Github, href: "https://github.com/maxcabd", label: "GitHub" },
           {
             icon: Linkedin,
-            href: "https://www.linkedin.com/in/mohamed-abdullahi-1434a218b",
+            href: "https://linkedin.com/in/maxcabd",
             label: "LinkedIn",
           },
           { icon: Mail, href: "mailto:contact@maxcabd.dev", label: "Email" },
