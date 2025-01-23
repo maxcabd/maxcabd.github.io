@@ -7,8 +7,8 @@ const nextConfig = {
   },
   output: "export",
   images: { unoptimized: true },
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || "",
+  basePath: "/maxcabd.github.io", // Replace with your repository name
+  assetPrefix: "/maxcabd.github.io", // Replace with your repository name
 };
 
 module.exports = withContentlayer(nextConfig);
