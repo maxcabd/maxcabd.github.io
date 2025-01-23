@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FileText } from "lucide-react";
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FileText } from 'lucide-react';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -39,30 +39,22 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center space-x-4"
           >
-            <div
-              className={`nav-link home ${pathname === "/" ? "active" : ""}`}
-            >
+            <div className={`nav-link home ${pathname === '/' ? 'active' : ''}`}>
               <button type="button">
                 <Link href="/">Home</Link>
               </button>
             </div>
-            <div
-              className={`nav-link projects ${pathname === "/projects" ? "active" : ""}`}
-            >
+            <div className={`nav-link projects ${pathname === '/projects' ? 'active' : ''}`}>
               <button type="button">
                 <Link href="/projects">Projects</Link>
               </button>
             </div>
-            <div
-              className={`nav-link blog ${pathname.startsWith("/blog") ? "active" : ""}`}
-            >
+            <div className={`nav-link blog ${pathname.startsWith('/blog') ? 'active' : ''}`}>
               <button type="button">
                 <Link href="/blog">Blog</Link>
               </button>
             </div>
-            <div
-              className={`nav-link contact ${pathname === "/contact" ? "active" : ""}`}
-            >
+            <div className={`nav-link contact ${pathname === '/contact' ? 'active' : ''}`}>
               <button type="button">
                 <Link href="/contact">Contact</Link>
               </button>
@@ -73,8 +65,8 @@ export function Navbar() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <Link
-              href="/resume-pdf.pdf"
+            <Link 
+              href="/resume.pdf" 
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-4 py-2 rounded-lg bg-gradient-to-r from-pink-600 via-blue-500 to-green-500 text-white font-medium text-sm hover:opacity-90 transition-opacity"

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Navbar } from "@/components/navbar";
-import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
-import Link from "next/link";
+import { Navbar } from '@/components/navbar';
+import { motion } from 'framer-motion';
+import { Mail } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ContactPage() {
   return (
@@ -17,7 +17,7 @@ export default function ContactPage() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-5xl font-extrabold mb-4">
-              Let&apos;s{" "}
+              Let&apos;s{' '}
               <span className="bg-gradient-to-r from-pink-600 via-blue-500 to-green-500 text-transparent bg-clip-text">
                 Connect
               </span>
@@ -46,8 +46,8 @@ export default function ContactPage() {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="text-muted-foreground max-w-md"
           >
-            Have an exciting opportunity or just want to say hi? Drop me a line
-            and I&apos;ll get back to you as soon as possible!
+            Have an exciting opportunity or just want to say hi? 
+            Drop me a line and I&apos;ll get back to you as soon as possible!
           </motion.p>
         </div>
       </div>
