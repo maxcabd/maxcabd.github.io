@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Github, Linkedin, Mail, Youtube } from 'lucide-react';
-import Link from 'next/link';
-import { allPosts, allProjects } from '@/.contentlayer/generated';
-import { compareDesc } from 'date-fns';
-import { formatDate } from '@/lib/utils';
-import { CardItem } from '@/components/card-item';
-import Image from 'next/image';
+import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Github, Linkedin, Mail, Youtube } from "lucide-react";
+import Link from "next/link";
+import { allPosts, allProjects } from "@/.contentlayer/generated";
+import { compareDesc } from "date-fns";
+import { formatDate } from "@/lib/utils";
+import { CardItem } from "@/components/card-item";
+import Image from "next/image";
 
 export function HeroSection() {
   return (
@@ -19,17 +19,25 @@ export function HeroSection() {
       className="space-y-6"
     >
       <h1 className="text-5xl font-extrabold tracking-tight">
-        Hi, I&apos;m <span className="bg-gradient-to-r from-pink-600 via-blue-600 to-green-500 text-transparent bg-clip-text">Mohamed</span>
+        Hi,I&apos;m{" "}
+        <span className="bg-gradient-to-r from-pink-600 via-blue-600 to-green-500 text-transparent bg-clip-text">
+          Mohamed
+        </span>
       </h1>
       <p className="text-xl text-muted-foreground max-w-2xl">
-        Full-stack developer passionate about building beautiful, functional, and user-centered digital experiences.
+        Full-stack developer passionate about building beautiful, functional,
+        and user-centered digital experiences.
       </p>
-      
+
       <div className="flex gap-4 pt-4">
         {[
-          { icon: Github, href: 'https://github.com/maxcabd', label: 'GitHub' },
-          { icon: Linkedin, href: 'https://linkedin.com/in/maxcabd', label: 'LinkedIn' },
-          { icon: Mail, href: 'mailto:contact@maxcabd.dev', label: 'Email' }
+          { icon: Github, href: "https://github.com/maxcabd", label: "GitHub" },
+          {
+            icon: Linkedin,
+            href: "https://linkedin.com/in/maxcabd",
+            label: "LinkedIn",
+          },
+          { icon: Mail, href: "mailto:contact@maxcabd.dev", label: "Email" },
         ].map((social) => (
           <Link
             key={social.label}
@@ -71,7 +79,7 @@ export function BlogSection() {
           <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
-      
+
       <div className="space-y-8">
         {posts.map((post) => (
           <CardItem
@@ -89,7 +97,7 @@ export function BlogSection() {
 
 export function ProjectsSection() {
   const projects = allProjects
-    .filter(project => project.featured)
+    .filter((project) => project.featured)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     .slice(0, 2);
 
@@ -110,10 +118,13 @@ export function ProjectsSection() {
           <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
-      
+
       <div className="grid grid-cols-1 gap-6">
         {projects.map((project) => (
-          <div key={project.slug} className="group relative h-48 rounded-lg overflow-hidden bg-secondary/50">
+          <div
+            key={project.slug}
+            className="group relative h-48 rounded-lg overflow-hidden bg-secondary/50"
+          >
             <Image
               src={project.image}
               alt={project.title}
@@ -122,10 +133,12 @@ export function ProjectsSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/0 p-4 flex flex-col justify-end">
               <div className="flex items-center gap-3">
-                <h3 className="text-lg font-bold text-white">{project.title}</h3>
+                <h3 className="text-lg font-bold text-white">
+                  {project.title}
+                </h3>
                 <div className="flex gap-2">
                   {project.github && (
-                    <Link 
+                    <Link
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -135,7 +148,7 @@ export function ProjectsSection() {
                     </Link>
                   )}
                   {project.youtube && (
-                    <Link 
+                    <Link
                       href={project.youtube}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -146,7 +159,9 @@ export function ProjectsSection() {
                   )}
                 </div>
               </div>
-              <p className="text-sm text-white/70 mt-2">{project.description}</p>
+              <p className="text-sm text-white/70 mt-2">
+                {project.description}
+              </p>
             </div>
           </div>
         ))}
