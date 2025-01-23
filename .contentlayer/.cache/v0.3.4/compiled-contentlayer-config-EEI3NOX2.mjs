@@ -1,11 +1,10 @@
+// contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
-import { type Options } from "rehype-pretty-code";
-
-const prettyCodeOptions: Partial<Options> = {
+var prettyCodeOptions = {
   theme: "github-dark",
   keepBackground: true,
   onVisitLine(node) {
@@ -14,15 +13,14 @@ const prettyCodeOptions: Partial<Options> = {
     }
   },
   onVisitHighlightedLine(node) {
-    node.properties.className = node.properties.className || []; // Initialize if undefined
+    node.properties.className = node.properties.className || [];
     node.properties.className.push("highlighted");
   },
   onVisitHighlightedChars(node) {
     node.properties.className = ["word"];
-  },
+  }
 };
-
-export const Post = defineDocumentType(() => ({
+var Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `posts/**/*.mdx`,
   contentType: "mdx",
@@ -31,21 +29,20 @@ export const Post = defineDocumentType(() => ({
     description: { type: "string", required: true },
     date: { type: "date", required: true },
     published: { type: "boolean", default: true },
-    tags: { type: "list", of: { type: "string" }, default: [] },
+    tags: { type: "list", of: { type: "string" }, default: [] }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("posts/", ""),
+      resolve: (doc) => doc._raw.flattenedPath.replace("posts/", "")
     },
     url: {
       type: "string",
-      resolve: (doc) => `/blog/${doc._raw.flattenedPath.replace("posts/", "")}`,
-    },
-  },
+      resolve: (doc) => `/blog/${doc._raw.flattenedPath.replace("posts/", "")}`
+    }
+  }
 }));
-
-export const Project = defineDocumentType(() => ({
+var Project = defineDocumentType(() => ({
   name: "Project",
   filePathPattern: `projects/**/*.mdx`,
   contentType: "mdx",
@@ -57,17 +54,16 @@ export const Project = defineDocumentType(() => ({
     github: { type: "string", required: false },
     youtube: { type: "string", required: false },
     stats: { type: "string", required: false },
-    featured: { type: "boolean", default: false },
+    featured: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("projects/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("projects/", "")
+    }
+  }
 }));
-
-export default makeSource({
+var contentlayer_config_default = makeSource({
   contentDirPath: "content",
   documentTypes: [Post, Project],
   mdx: {
@@ -80,10 +76,16 @@ export default makeSource({
         {
           properties: {
             className: ["subheading-anchor"],
-            ariaLabel: "Link to section",
-          },
-        },
-      ],
-    ],
-  },
+            ariaLabel: "Link to section"
+          }
+        }
+      ]
+    ]
+  }
 });
+export {
+  Post,
+  Project,
+  contentlayer_config_default as default
+};
+//# sourceMappingURL=compiled-contentlayer-config-EEI3NOX2.mjs.map
