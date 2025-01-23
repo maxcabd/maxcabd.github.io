@@ -9,5 +9,21 @@ published: true
 
 ![debin](/debin-splash.png)
 
+
 # What is debin?
-Debin was born of a need to parse binary data intuitively without all the boilerplate and complexity that traditional methods provide.
+
+Debin was born of a need to parse binary data intuitively without all the boilerplate and complexity that traditional methods provide in Python.
+Writing binary parsers should be simple and straightforward, and debin aims to provide that simplicity by leveraging Python's dataclasses. By using dataclasses,
+we can skip all the boilerplate that comes with defining Python classes and instead focus on the structure of the binary data we want to parse and not *how* to parse it.
+With debin, we can have a consistency in our binary parsing code that is hard to achieve with other methods and libraries. I had much difficulty finding a library in Python that:
+
+1. Was declarative in nature
+2. Was easy to use without all the boilerplate
+3. Included C like types like `uint8_t`, `uint16_t`, etc.
+4. Encouraged type safety in the context of Python
+
+
+Finding a library that did all of these things was difficult, so I decided to write my own.
+
+
+# Previous works
