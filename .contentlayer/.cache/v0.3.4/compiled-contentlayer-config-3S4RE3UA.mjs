@@ -4,6 +4,21 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+var prettyCodeOptions = {
+  theme: "github-dark",
+  keepBackground: true,
+  onVisitLine(node) {
+    if (node.children.length === 0) {
+      node.children = [{ type: "text", value: " " }];
+    }
+  },
+  onVisitHighlightedLine(node) {
+    node.properties.className.push("highlighted");
+  },
+  onVisitHighlightedWord(node) {
+    node.properties.className = ["word"];
+  }
+};
 var Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `posts/**/*.mdx`,
@@ -54,24 +69,7 @@ var contentlayer_config_default = makeSource({
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
-      [
-        rehypePrettyCode,
-        {
-          theme: "github-dark",
-          keepBackground: true,
-          onVisitLine(node) {
-            if (node.children.length === 0) {
-              node.children = [{ type: "text", value: " " }];
-            }
-          },
-          onVisitHighlightedLine(node) {
-            node.properties.className.push("highlighted");
-          },
-          onVisitHighlightedWord(node) {
-            node.properties.className = ["word"];
-          }
-        }
-      ],
+      [rehypePrettyCode, prettyCodeOptions],
       [
         rehypeAutolinkHeadings,
         {
@@ -89,4 +87,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-GK7U2V6O.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-3S4RE3UA.mjs.map
