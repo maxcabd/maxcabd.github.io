@@ -50,7 +50,8 @@ var Project = defineDocumentType(() => ({
     title: { type: "string", required: true },
     description: { type: "string", required: true },
     date: { type: "date", required: true },
-    image: { type: "string", required: true },
+    image: { type: "string", required: false },
+    // Changed from required: true
     github: { type: "string", required: false },
     youtube: { type: "string", required: false },
     stats: { type: "string", required: false },
@@ -88,4 +89,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-EEI3NOX2.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-4IQ75SOQ.mjs.map

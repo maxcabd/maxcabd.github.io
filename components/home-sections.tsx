@@ -125,12 +125,16 @@ export function ProjectsSection() {
             key={project.slug}
             className="group relative h-48 rounded-lg overflow-hidden bg-secondary/50"
           >
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
+            {project.image ? (
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 via-blue-500/20 to-green-500/20" />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/0 p-4 flex flex-col justify-end">
               <div className="flex items-center gap-3">
                 <h3 className="text-lg font-bold text-white">

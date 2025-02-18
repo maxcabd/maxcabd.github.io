@@ -1,13 +1,15 @@
-import { Navbar } from '@/components/navbar';
-import { Github, Youtube } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { allProjects } from '@/.contentlayer/generated';
-import { compareDesc } from 'date-fns';
+"use client";
+
+import { Navbar } from "@/components/navbar";
+import { Github, Youtube } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { allProjects } from "@/.contentlayer/generated";
+import { compareDesc } from "date-fns";
 
 export default function ProjectsPage() {
-  const projects = allProjects.sort((a, b) => 
-    compareDesc(new Date(a.date), new Date(b.date))
+  const projects = allProjects.sort((a, b) =>
+    compareDesc(new Date(a.date), new Date(b.date)),
   );
 
   return (
@@ -18,13 +20,15 @@ export default function ProjectsPage() {
         <div className="space-y-16">
           {projects.map((project, index) => (
             <div key={project.slug}>
-              <div className="grid grid-cols-1 md:grid-cols-[1fr,300px] gap-6 items-start">
+              <div
+                className={`grid grid-cols-1 ${project.image ? "md:grid-cols-[1fr,300px]" : ""} gap-6 items-start`}
+              >
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <h2 className="text-2xl font-bold">{project.title}</h2>
                     <div className="flex gap-2">
                       {project.github && (
-                        <Link 
+                        <Link
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -34,7 +38,7 @@ export default function ProjectsPage() {
                         </Link>
                       )}
                       {project.youtube && (
-                        <Link 
+                        <Link
                           href={project.youtube}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -45,19 +49,27 @@ export default function ProjectsPage() {
                       )}
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{project.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {project.description}
+                  </p>
                   {project.stats && (
-                    <p className="text-xs text-muted-foreground">{project.stats}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {project.stats}
+                    </p>
                   )}
                 </div>
-                <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-secondary/50">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+                {project.image && (
+                  <div className="relative w-full h-[200px] rounded-lg overflow-hidden bg-secondary/50">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority={index === 0}
+                    />
+                  </div>
+                )}
               </div>
               {index < projects.length - 1 && (
                 <div className="my-8 h-px bg-gradient-to-r from-transparent via-border to-transparent" />

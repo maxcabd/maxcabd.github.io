@@ -53,7 +53,7 @@ export const Project = defineDocumentType(() => ({
     title: { type: "string", required: true },
     description: { type: "string", required: true },
     date: { type: "date", required: true },
-    image: { type: "string", required: true },
+    image: { type: "string", required: false }, // Changed from required: true
     github: { type: "string", required: false },
     youtube: { type: "string", required: false },
     stats: { type: "string", required: false },

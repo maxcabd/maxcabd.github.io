@@ -32,7 +32,7 @@ export type Project = {
   title: string
   description: string
   date: IsoDateTimeString
-  image: string
+  image?: string | undefined
   github?: string | undefined
   youtube?: string | undefined
   stats?: string | undefined
