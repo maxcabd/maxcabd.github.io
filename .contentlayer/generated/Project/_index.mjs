@@ -2,7 +2,8 @@
 
 import projects__debinMdx from './projects__debin.mdx.json' assert { type: 'json' }
 import projects__messageInfoLocalizerMdx from './projects__message-info-localizer.mdx.json' assert { type: 'json' }
-import projects__xfbinRsMdx from './projects__xfbin-rs.mdx.json' assert { type: 'json' }
+import projects__strmconvMdx from './projects__strmconv.mdx.json' assert { type: 'json' }
 import projects__websiteMdx from './projects__website.mdx.json' assert { type: 'json' }
+import projects__xfbinRsMdx from './projects__xfbin-rs.mdx.json' assert { type: 'json' }
 
-export const allProjects = [projects__debinMdx, projects__messageInfoLocalizerMdx, projects__xfbinRsMdx, projects__websiteMdx]
+export const allProjects = [projects__debinMdx, projects__messageInfoLocalizerMdx, projects__strmconvMdx, projects__websiteMdx, projects__xfbinRsMdx]
