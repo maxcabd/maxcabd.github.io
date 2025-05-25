@@ -44,8 +44,8 @@ export function CardItem({ title, description, date, tags, href, className }: Ca
           </div>
           <div className="flex flex-wrap gap-1.5 mt-auto pt-3">
             {tags.map((tag) => (
-              <Badge 
-                key={tag} 
+              <Badge
+                key={tag}
                 variant="secondary"
                 className="text-[10px] px-2 py-0.5 transition-colors group-hover:bg-white/10 group-hover:text-white"
               >

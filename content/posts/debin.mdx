@@ -1,0 +1,184 @@
+---
+title: debin - A declarative binary parser for Python
+description: debin is a fast, declarative binary parser for Python. Define binary formats using dataclasses and get type-safe, Rust-powered parsing with zero boilerplate.
+date: 2025-05-23
+tags: [python, rust, declarative, binary, parsing]
+published: true
+---
+
+
+![debin](/debin-splash.webp)
+
+## Parsing Binary Shouldn't Hurt
+
+If you're like me, you probably spend a lot of time working with raw binary data—reverse engineering file formats, inspecting network packets, parsing firmware dumps, decoding game assets, or building tools that need to read and write structured binary blobs.
+
+So if you've ever tried to parse binary data in Python, you know the pain—manual offsets, brittle byte slicing, DSLs disguised as Python. I wanted something better. So I built debin.
+
+But if you're not familiar, let's look at what the hell we're even talking about.
+
+# What Is Binary Parsing?
+
+Binary parsing is how we turn raw bytes—like those from a file, network packet, or memory dump—into meaningful, structured data.
+
+Instead of a wall of hex, we want to say:
+
+> This first chunk is the header. That part’s the payload. This field is only present if the type is X.
+
+And while binary data is everywhere—image formats, 3D models, save games, firmware dumps—there’s surprisingly little out there that makes parsing it... pleasant.
+
+
+So how do we do this simply using an easy-to-use language like Python? 
+
+
+# A Tour of Existing Tools (This isn't new)
+
+Before creating debin, I tried a few existing ibraries:
+
+- [struct](https://docs.python.org/3/library/struct.html) - Python’s built-in option. Fast and native, but primitive. You're on your own for everything beyond the basics.
+- [bitstring](https://github.com/scott-griffiths/bitstring) -  Useful for parsing at the bit level, but too low-level and verbose for structured formats. A lot similar to struct.
+- [construct](https://construct.readthedocs.io/en/latest/) - A powerful declarative and symmetrical parser and builder for binary data.
+- [caterpillar](https://matrixeditor.github.io/caterpillar/) - Loved the creativity, but it leans into a DSL-like syntax. It's clever, but doesn’t feel like Python anymore.
+
+
+## My Design Choice
+
+The main benefit of debin was that it sticks with idiomatic Python: just dataclasses, type hints, and decorators.
+Of course, making it declarative was the focal point, but there are already other libraries that do that fairly well. What they lack in however, debin makes up for.
+
+# A Huge Inspiration: [binrw](https://docs.rs/binrw/latest/binrw/index.html)
+
+A major source of inspiration for debin was [binrw](https://docs.rs/binrw/latest/binrw/index.html), a Rust-based declarative binary parser. binrw is beautiful. 
+It uses Rust's powerful attribute macros to build elegant, high-performance parsers. 
+It's intuitive to use, feels almost magical ✨, and it’s blazingly fast.
+
+But there’s a catch: Rust is not always beginner-friendly. Writing a quick parser in Rust means wrangling lifetimes, compiler errors, and unfamiliar syntax.
+
+So I thought—what if I could bring that [binrw](https://docs.rs/binrw/latest/binrw/index.html) magic to Python?
+
+# Introducing debin 🧙
+debin lets you define your binary formats using plain Python dataclasses—and turns them into fast, type-safe parsers. No DSLs. No offsets. No magic. Just Python.
+
+- No DSLs.
+
+- You don’t touch byte offsets or unpack functions
+
+- You use real type hints and standard Python syntax
+
+- Rust-grade performance
+
+Just type-safe, readable dataclasses that describe your format—and debin handles the rest. 
+Oh, and under the hood, it's powered by Rust 🦀. For speed of course.
+
+
+Here’s how most developers typically approach binary parsing using [struct](https://docs.python.org/3/library/struct.html):
+
+```python
+import struct
+
+data = open("object.bin", "rb").read()
+
+x, y, z, object_id = struct.unpack("<fffI", data)
+
+obj = {
+    "position": {"x": x, "y": y, "z": z},
+    "id": object_id
+}
+```
+
+This works, but there are a few problems.
+
+- You have to remember the format string
+
+- There’s no structure—just a tuple
+
+- You manually track field types, order, and size
+
+- No validation, nesting, or reuse
+
+- Doesn’t scale for anything more complex
+
+Now here it is in debin:
+
+```python
+from debin import *
+
+
+@debin
+class Vec3:
+    x: float32
+    y: float32
+    z: float32
+
+@debin
+class Object:
+    position: Vec3
+    id: uint32
+
+with open("sample.bin", "rb") as file:
+        buffer = file.read()
+obj = Object.read_le(buffer)
+```
+No manual tracking. No offset slicing. Describe the format using native Python, and debin takes care of parsing.
+
+# It Gets Even Better
+
+Need dynamic fields? Conditional logic? Lists with variable length?
+
+No problem.
+
+debin isn’t just for simple structs. You can:
+
+- Parse conditionally-present fields
+
+- Handle variable-length lists
+
+- Use lambdas to drive dynamic behavior
+
+- Write custom parsing logic for your use case
+
+
+Here’s a more realistic example that illustrates this—parsing a PNG file:
+
+```python
+
+from debin import *
+from debin.helpers import until_eof
+
+@debin(magic=b"\x89PNG\r\n\x1a\n")
+class PNGSignature:
+    pass  # Magic-only section
+
+@debin
+class PNGChunk:
+    length: uint32
+    type: bytes4
+    data: List[uint8] = field(metadata={"count": 'length'})
+    crc: uint32
+
+@debin
+class PNGFile:
+    signature: PNGSignature
+    chunks: List[PNGChunk] = field(metadata={"parse_with": until_eof})
+```
+
+It's that easy. All the heavy lifting is done for you—just write a few lines of Python, and Debin takes care of the rest.
+
+Whether you're inspecting packet headers, parsing texture formats, or reversing legacy data structures, debin helps you move fast without sacrificing clarity or performance.
+
+
+Want to learn more or try it for yourself? 🧙
+
+```bash
+pip install debin
+```
+
+💻 Github: https://github.com/maxcabd/debin
+
+📦 PyPi : https://pypi.org/project/debin/
+
+Issues, feedback, and PRs are always welcome.
+
+
+Made with ❤️ and Rust.
+

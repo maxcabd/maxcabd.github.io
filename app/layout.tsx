@@ -1,13 +1,36 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Bagel_Fat_One } from "next/font/google";
+import localFont from 'next/font/local';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Footer } from "@/components/footer";
 
 const bagel = Bagel_Fat_One({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-bagel",
+  weight: "400",           // ✅ Must match a supported weight
+  subsets: ["latin"],      // ✅ Required
+  variable: "--font-bagel" // ✅ If you're using Tailwind custom font
+});
+
+const ginto = localFont({
+  src: [
+    {
+      path: "../public/fonts/Ginto Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Ginto Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Ginto Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-ginto",
+
 });
 
 export const metadata: Metadata = {
@@ -35,7 +58,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${bagel.variable} font-mono antialiased`}
+        className={`${bagel.variable} ${ginto.variable} font-ginto antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider

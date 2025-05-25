@@ -42,28 +42,28 @@ export function Navbar() {
             <div
               className={`nav-link home ${pathname === "/" ? "active" : ""}`}
             >
-              <button type="button">
+              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
                 <Link href="/">Home</Link>
               </button>
             </div>
             <div
               className={`nav-link projects ${pathname === "/projects" ? "active" : ""}`}
             >
-              <button type="button">
+              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
                 <Link href="/projects">Projects</Link>
               </button>
             </div>
             <div
               className={`nav-link blog ${pathname.startsWith("/blog") ? "active" : ""}`}
             >
-              <button type="button">
+              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
                 <Link href="/blog">Blog</Link>
               </button>
             </div>
             <div
               className={`nav-link contact ${pathname === "/contact" ? "active" : ""}`}
             >
-              <button type="button">
+              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
                 <Link href="/contact">Contact</Link>
               </button>
             </div>
@@ -77,7 +77,7 @@ export function Navbar() {
               href="/resume-pdf.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 rounded-lg bg-gradient-to-r from-pink-600 via-blue-500 to-green-500 text-white font-medium text-sm hover:opacity-90 transition-opacity"
+              className="inline-flex items-center px-4 py-2 rounded-xl bg-gradient-to-r from-pink-600 via-blue-500 to-green-500 text-white font-medium text-sm hover:opacity-90 transition-opacity"
             >
               <FileText className="w-4 h-4 mr-2" />
               Resume

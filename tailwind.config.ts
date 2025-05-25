@@ -12,6 +12,8 @@ const config: Config = {
       fontFamily: {
         mono: ["DM Mono", "serif"],
         bagel: ["var(--font-bagel)", "cursive"],
+        ginto: ["var(--font-ginto)", "sans-serif"],
+
       },
       colors: {
         pink: {

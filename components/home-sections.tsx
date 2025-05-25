@@ -18,10 +18,10 @@ export function HeroSection() {
       transition={{ duration: 0.5 }}
       className="space-y-6"
     >
-      <h1 className="text-5xl font-extrabold tracking-tight">
-        Hi,I&apos;m{" "}
+      <h1 className="text-5xl font-bold tracking-tight">
+        Hi, I&apos;m{" "}
         <span className="bg-gradient-to-r from-pink-600 via-blue-600 to-green-500 text-transparent bg-clip-text">
-          Mohamed
+          Max
         </span>
       </h1>
       <p className="text-xl text-muted-foreground max-w-2xl">

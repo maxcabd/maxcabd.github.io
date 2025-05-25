@@ -9,7 +9,7 @@ export default function BlogPage() {
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background justify-center items-center">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <h1 className="text-4xl font-bold mb-16">Blog</h1>
         <div className="space-y-8">
