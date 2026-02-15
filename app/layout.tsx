@@ -48,7 +48,7 @@ const friends = localFont({
       style: "normal",
     },
     {
-      path: "../public/fonts/Friends Ultrabold.ttf",
+      path: "../public/fonts/Friends UltraBold.ttf",
       weight: "500",
       style: "normal",
     },
