@@ -2,9 +2,21 @@
 
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Link from "next/link";
+import React from "react";
 
-function slugify(text: string) {
-  return text
+function extractText(node: React.ReactNode): string {
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (!node) return "";
+  if (Array.isArray(node)) return node.map(extractText).join("");
+  if (typeof node === "object" && "props" in node) {
+    return extractText((node as React.ReactElement).props.children);
+  }
+  return "";
+}
+
+function slugify(node: React.ReactNode): string {
+  return extractText(node)
     .toLowerCase()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-")
@@ -15,8 +27,8 @@ function slugify(text: string) {
 const components = {
   h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
-      id={typeof children === "string" ? slugify(children) : undefined}
-      className="mt-16 mb-6 font-garamond text-[clamp(1.8rem,5vw,2.5rem)] font-normal leading-tight tracking-[-0.01em] text-white scroll-mt-24"
+      id={slugify(children)}
+      className="mt-16 mb-6 font-semibold text-[clamp(1.8rem,5vw,2.5rem)] font-normal leading-tight tracking-[-0.01em] text-white scroll-mt-24"
       {...props}
     >
       {children}
@@ -24,7 +36,7 @@ const components = {
   ),
   h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
-      id={typeof children === "string" ? slugify(children) : undefined}
+      id={slugify(children)}
       className="mt-14 mb-6 font-garamond text-[clamp(1.5rem,4vw,2rem)] font-normal leading-tight tracking-[-0.01em] text-white scroll-mt-24"
       {...props}
     >
@@ -33,7 +45,7 @@ const components = {
   ),
   h3: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      id={typeof children === "string" ? slugify(children) : undefined}
+      id={slugify(children)}
       className="mt-10 mb-4 font-garamond text-[clamp(1.25rem,3vw,1.6rem)] font-normal leading-tight text-white scroll-mt-24"
       {...props}
     >
@@ -81,7 +93,11 @@ const components = {
       {...props}
     />
   ),
-  a: ({ className, children, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
+  a: ({
+    className,
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLAnchorElement>) => (
     <Link
       className="bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 bg-clip-text text-transparent underline decoration-warm/30 underline-offset-4 hover:decoration-white/60 transition-all duration-300"
       {...props}

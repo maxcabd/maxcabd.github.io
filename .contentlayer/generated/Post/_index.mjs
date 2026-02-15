@@ -2,5 +2,6 @@
 
 import posts__debinMdx from './posts__debin.mdx.json' assert { type: 'json' }
 import posts__introducingBlinkedMdx from './posts__introducing-blinked.mdx.json' assert { type: 'json' }
+import posts__riskEngineMdx from './posts__risk-engine.mdx.json' assert { type: 'json' }
 
-export const allPosts = [posts__debinMdx, posts__introducingBlinkedMdx]
+export const allPosts = [posts__debinMdx, posts__introducingBlinkedMdx, posts__riskEngineMdx]
