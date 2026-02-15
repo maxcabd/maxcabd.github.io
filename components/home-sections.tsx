@@ -28,7 +28,7 @@ export function HeroSection() {
           {[
             { label: "GitHub", href: "https://github.com/maxcabd" },
             { label: "LinkedIn", href: "https://linkedin.com/in/maxcabd" },
-            { label: "Email", href: "mailto:contact@maxcabd.dev" },
+            { label: "Email", href: "mailto:max.cabd@gmail.com" },
           ].map((link, i) => (
             <span key={link.label} className="flex items-center gap-2">
               {i > 0 && <span>·</span>}
