@@ -39,6 +39,23 @@ const ginto = localFont({
   variable: "--font-ginto",
 });
 
+const friends = localFont({
+  src: [
+
+    {
+      path: "../public/fonts/Friends SemiBold.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Friends Ultrabold.ttf",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  variable: "--font-friends",
+});
+
 export const metadata: Metadata = {
   title: "maxcabd | Portfolio",
   description: "Personal portfolio website of maxcabd",
@@ -52,7 +69,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${bagel.variable} ${garamond.variable} ${ginto.variable} font-ginto antialiased`}
+        className={`${bagel.variable} ${garamond.variable} ${ginto.variable} ${friends.variable} font-friends antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider

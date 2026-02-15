@@ -28,6 +28,8 @@ var Post = defineDocumentType(() => ({
     title: { type: "string", required: true },
     description: { type: "string", required: true },
     date: { type: "date", required: true },
+    readTime: { type: "string", required: true },
+    author: { type: "string", required: true },
     published: { type: "boolean", default: true },
     tags: { type: "list", of: { type: "string" }, default: [] }
   },
@@ -89,4 +91,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-4IQ75SOQ.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-HDIMVIOI.mjs.map

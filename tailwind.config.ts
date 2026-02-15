@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         ginto: ["var(--font-ginto)"],
+        friends: ["var(--font-friends)"],
         bagel: ["var(--font-bagel)"],
         garamond: ["var(--font-garamond)"],
       },

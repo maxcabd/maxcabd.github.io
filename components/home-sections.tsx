@@ -15,7 +15,7 @@ export function HeroSection() {
       className="pt-40 pb-24 px-6"
     >
       <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-[clamp(3rem,8vw,6rem)] font-garamond font-normal leading-[1.05] tracking-[-0.02em] text-white">
+        <h1 className="text-[clamp(3rem,8vw,6rem)] font-garamond font-semibold leading-[1.05] tracking-[-0.02em] text-white">
           Max Abdullahi
         </h1>
 
@@ -99,7 +99,7 @@ export function BlogSection() {
           href="/blog"
           className="inline-flex items-center gap-1.5 mt-10 text-[13px] text-warm hover:text-white transition-colors duration-300"
         >
-          All writing
+          All posts
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>

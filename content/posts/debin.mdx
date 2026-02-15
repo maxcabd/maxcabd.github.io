@@ -1,29 +1,22 @@
 ---
 title: debin - A declarative binary parser for Python
 description: debin is a fast, declarative binary parser for Python. Define binary formats using dataclasses and get type-safe, Rust-powered parsing with zero boilerplate.
+author: Mohamed Abdullahi
 date: 2025-05-23
-tags: [python, rust, declarative, binary, parsing]
-published: true
+readTime: 5 min read
 ---
 
 
 
-If you're like me, you probably spend a lot of time working with raw binary data—reverse engineering file formats, inspecting network packets, parsing firmware dumps, decoding game assets, or building tools that need to read and write structured binary blobs.
+If you work with binary data, you know how painful parsing can be. Reverse engineering file formats, decoding game assets, or inspecting packets usually means manual offsets, brittle slicing, and unreadable code.
 
-So if you've ever tried to parse binary data in Python, you know the pain—manual offsets, brittle byte slicing, DSLs disguised as Python. I wanted something better. So I built debin.
-
-But if you're not familiar, let's look at what the hell we're even talking about.
+I wanted something better. So I built debin.
 
 # What Is Binary Parsing?
 
-Binary parsing is how we turn raw bytes—like those from a file, network packet, or memory dump—into meaningful, structured data.
+Binary parsing converts raw bytes into structured data. Instead of a wall of hex, you define fields and structure such as headers, payloads, and conditional sections.
 
-Instead of a wall of hex, we want to say:
-
-> This first chunk is the header. That part’s the payload. This field is only present if the type is X.
-
-And while binary data is everywhere—image formats, 3D models, save games, firmware dumps—there’s surprisingly little out there that makes parsing it... pleasant.
-
+Binary data is everywhere, but parsing it in Python is often unpleasant.
 
 
 
@@ -42,35 +35,15 @@ Before creating debin, I tried a few existing ibraries:
 
 ## My Design Choice
 
-The main benefit of debin was that it sticks with idiomatic Python: just dataclasses, type hints, and decorators.
-Of course, making it declarative was the focal point, but there are already other libraries that do that fairly well. What they lack in however, debin makes up for.
+debin keeps everything native to Python. You use dataclasses, type hints, and decorators. No DSL, no format strings, and no manual offsets.
 
-# A Huge Inspiration: [binrw](https://docs.rs/binrw/latest/binrw/index.html)
+It was heavily inspired by [binrw](https://docs.rs/binrw/latest/binrw/index.html), a Rust declarative binary parser. [binrw](https://docs.rs/binrw/latest/binrw/index.html) is fast and elegant, but Rust has a steep learning curve. debin brings that model to Python while keeping performance high using Rust internally.
 
-A major source of inspiration for debin was [binrw](https://docs.rs/binrw/latest/binrw/index.html), a Rust-based declarative binary parser. binrw is beautiful. 
-It uses Rust's powerful attribute macros to build elegant, high-performance parsers. 
-It's intuitive to use, feels almost magical ✨, and it’s blazingly fast.
-
-But there’s a catch: Rust is not always beginner-friendly. Writing a quick parser in Rust means wrangling lifetimes, compiler errors, and unfamiliar syntax.
-
-So I thought—what if I could bring that [binrw](https://docs.rs/binrw/latest/binrw/index.html) magic to Python?
 
 # Introducing debin 🧙
-debin lets you define your binary formats using plain Python dataclasses—and turns them into fast, type-safe parsers. No DSLs. No offsets. No magic. Just Python.
+debin lets you define binary formats using simple dataclasses. It generates fast, type safe parsers automatically.
 
-- No DSLs.
-
-- You don’t touch byte offsets or unpack functions
-
-- You use real type hints and standard Python syntax
-
-- Rust-grade performance
-
-Just type-safe, readable dataclasses that describe your format—and debin handles the rest. 
-Oh, and under the hood, it's powered by Rust 🦀. For speed of course.
-
-
-Here’s how most developers typically approach binary parsing using [struct](https://docs.python.org/3/library/struct.html):
+Typical parsing with [struct](https://docs.python.org/3/library/struct.html):
 
 ```python
 import struct
@@ -85,19 +58,16 @@ obj = {
 }
 ```
 
-This works, but there are a few problems.
+The problems:
 
-- You have to remember the format string
+- Format strings are fragile
 
-- There’s no structure—just a tuple
+- No structure or type safety
 
-- You manually track field types, order, and size
+- Hard to scale or reuse
 
-- No validation, nesting, or reuse
 
-- Doesn’t scale for anything more complex
-
-Now here it is in debin:
+The same example in debin:
 
 ```python
 from debin import *
@@ -118,26 +88,23 @@ with open("sample.bin", "rb") as file:
         buffer = file.read()
 obj = Object.read_le(buffer)
 ```
-No manual tracking. No offset slicing. Describe the format using native Python, and debin takes care of parsing.
+No offsets or unpacking. Just describe the format.
 
 # It Gets Even Better
 
-Need dynamic fields? Conditional logic? Lists with variable length?
 
-No problem.
+debin also supports:
 
-debin isn’t just for simple structs. You can:
+- Conditional fields
 
-- Parse conditionally-present fields
+- Variable length lists
 
-- Handle variable-length lists
+- Dynamic parsing logic
 
-- Use lambdas to drive dynamic behavior
-
-- Write custom parsing logic for your use case
+- Nested structures
 
 
-Here’s a more realistic example that illustrates this—parsing a PNG file:
+Example PNG parser:
 
 ```python
 
@@ -160,11 +127,7 @@ class PNGFile:
     signature: PNGSignature
     chunks: List[PNGChunk] = field(metadata={"parse_with": until_eof})
 ```
-
-It's that easy. All the heavy lifting is done for you—just write a few lines of Python, and Debin takes care of the rest.
-
-Whether you're inspecting packet headers, parsing texture formats, or reversing legacy data structures, debin helps you move fast without sacrificing clarity or performance.
-
+Define the structure and debin handles the parsing.
 
 Want to learn more or try it for yourself? 🧙
 
@@ -177,7 +140,3 @@ pip install debin
 📦 PyPi : https://pypi.org/project/debin/
 
 Issues, feedback, and PRs are always welcome.
-
-
-Made with ❤️ and Rust.
-

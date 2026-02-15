@@ -30,6 +30,8 @@ export const Post = defineDocumentType(() => ({
     title: { type: "string", required: true },
     description: { type: "string", required: true },
     date: { type: "date", required: true },
+    readTime: { type: "string", required: true },
+    author: { type: "string", required: true },
     published: { type: "boolean", default: true },
     tags: { type: "list", of: { type: "string" }, default: [] },
   },

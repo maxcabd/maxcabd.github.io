@@ -16,6 +16,8 @@ export type Post = {
   title: string
   description: string
   date: IsoDateTimeString
+  readTime: string
+  author: string
   published: boolean
   tags: string[]
   /** MDX file body */
