@@ -57,8 +57,8 @@ const friends = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "maxcabd | Portfolio",
-  description: "Personal portfolio website of maxcabd",
+  title: "maxcabd",
+  description: "Thoughts and ideas",
 };
 
 export default function RootLayout({
