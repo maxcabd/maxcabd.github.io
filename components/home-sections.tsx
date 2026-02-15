@@ -1,57 +1,50 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Github, Linkedin, Mail, Youtube } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { allPosts, allProjects } from "@/.contentlayer/generated";
-import { compareDesc } from "date-fns";
-import { formatDate } from "@/lib/utils";
-import { CardItem } from "@/components/card-item";
-import Image from "next/image";
+import { allPosts } from "@/.contentlayer/generated";
+import { compareDesc, format } from "date-fns";
 
 export function HeroSection() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="space-y-6"
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="pt-40 pb-24 px-6"
     >
-      <h1 className="text-5xl font-bold tracking-tight">
-        Hi, I&apos;m{" "}
-        <span className="bg-gradient-to-r from-pink-600 via-blue-600 to-green-500 text-transparent bg-clip-text">
-          Max
-        </span>
-      </h1>
-      <p className="text-xl text-muted-foreground max-w-2xl">
-        Full-stack developer passionate about building beautiful, functional,
-        and user-centered digital experiences.
-      </p>
+      <div className="max-w-3xl mx-auto text-center">
+        <h1 className="text-[clamp(3rem,8vw,6rem)] font-garamond font-normal leading-[1.05] tracking-[-0.02em] text-white">
+          Max Abdullahi
+        </h1>
 
-      <div className="flex gap-4 pt-4">
-        {[
-          { icon: Github, href: "https://github.com/maxcabd", label: "GitHub" },
-          {
-            icon: Linkedin,
-            href: "https://linkedin.com/in/maxcabd",
-            label: "LinkedIn",
-          },
-          { icon: Mail, href: "mailto:contact@maxcabd.dev", label: "Email" },
-        ].map((social) => (
-          <Link
-            key={social.label}
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
-            aria-label={social.label}
-          >
-            <social.icon className="w-5 h-5" />
-          </Link>
-        ))}
+        <p className="mt-6 text-[15px] font-light tracking-wide italic font-garamond text-warm">
+
+        </p>
+
+        <div className="mt-8 flex items-center justify-center gap-2 text-[13px] text-warm tracking-widest">
+          <span>Also on</span>
+          {[
+            { label: "GitHub", href: "https://github.com/maxcabd" },
+            { label: "LinkedIn", href: "https://linkedin.com/in/maxcabd" },
+            { label: "Email", href: "mailto:contact@maxcabd.dev" },
+          ].map((link, i) => (
+            <span key={link.label} className="flex items-center gap-2">
+              {i > 0 && <span>·</span>}
+              <Link
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors duration-300"
+              >
+                {link.label}
+              </Link>
+            </span>
+          ))}
+        </div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 }
 
@@ -59,117 +52,57 @@ export function BlogSection() {
   const posts = allPosts
     .filter((post) => post.published)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
-    .slice(0, 3);
+    .slice(0, 4);
 
   return (
-    <motion.div
+    <motion.section
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ delay: 0.2 }}
-      className="sticky top-24"
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className="px-6 pb-32"
     >
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-bold">Latest Blog Posts</h2>
-        <Link
-          href="/blog"
-          className="group flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-        >
-          View all
-          <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-        </Link>
-      </div>
+      <div className="max-w-3xl mx-auto">
+        <p className="text-[11px] text-warm tracking-[0.2em] uppercase mb-10">
+          Recent
+        </p>
 
-      <div className="space-y-8">
-        {posts.map((post) => (
-          <CardItem
-            key={post.slug}
-            title={post.title}
-            date={formatDate(post.date)}
-            tags={post.tags}
-            href={post.url}
-          />
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-export function ProjectsSection() {
-  const projects = allProjects
-    .filter((project) => project.featured)
-    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
-    .slice(0, 2);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.3 }}
-    >
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-bold">Featured Projects</h2>
-        <Link
-          href="/projects"
-          className="group flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-        >
-          View all
-          <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-        </Link>
-      </div>
-
-      <div className="grid grid-cols-1 gap-6">
-        {projects.map((project) => (
-          <div
-            key={project.slug}
-            className="group relative h-48 rounded-lg overflow-hidden bg-secondary/50"
-          >
-            {project.image ? (
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 via-blue-500/20 to-green-500/20" />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/0 p-4 flex flex-col justify-end">
-              <div className="flex items-center gap-3">
-                <h3 className="text-lg font-bold text-white">
-                  {project.title}
+        <div className="space-y-0">
+          {posts.map((post, index) => (
+            <Link key={post.slug} href={post.url}>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="group py-6 border-b border-warm/20 first:pt-0 cursor-pointer
+                  hover:bg-warm/5 -mx-4 px-4 rounded-lg transition-colors duration-300"
+              >
+                <h3 className="text-[17px] text-white/85 font-normal leading-relaxed group-hover:text-white transition-colors duration-300">
+                  {post.title}
                 </h3>
-                <div className="flex gap-2">
-                  {project.github && (
-                    <Link
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white/70 hover:text-white transition-colors"
-                    >
-                      <Github className="w-5 h-5" />
-                    </Link>
-                  )}
-                  {project.youtube && (
-                    <Link
-                      href={project.youtube}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white/70 hover:text-white transition-colors"
-                    >
-                      <Youtube className="w-5 h-5" />
-                    </Link>
+                <div className="mt-1.5 flex items-center gap-3 text-[13px] text-warm">
+                  <span>{format(new Date(post.date), "MMM yyyy")}</span>
+                  {post.tags && post.tags.length > 0 && (
+                    <>
+                      <span>·</span>
+                      <span>{post.tags.slice(0, 2).join(", ")}</span>
+                    </>
                   )}
                 </div>
-              </div>
-              <p className="text-sm text-white/70 mt-2">
-                {project.description}
-              </p>
-            </div>
-          </div>
-        ))}
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-1.5 mt-10 text-[13px] text-warm hover:text-white transition-colors duration-300"
+        >
+          All writing
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
-    </motion.div>
+    </motion.section>
   );
 }

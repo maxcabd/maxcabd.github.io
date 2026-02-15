@@ -10,12 +10,12 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        mono: ["DM Mono", "serif"],
-        bagel: ["var(--font-bagel)", "cursive"],
-        ginto: ["var(--font-ginto)", "sans-serif"],
-
+        ginto: ["var(--font-ginto)"],
+        bagel: ["var(--font-bagel)"],
+        garamond: ["var(--font-garamond)"],
       },
       colors: {
+        warm: "#a39d95",
         pink: {
           400: "#f472b6",
           600: "#db2777",

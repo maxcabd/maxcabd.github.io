@@ -1,10 +1,10 @@
-import { allPosts } from '@/.contentlayer/generated';
-import { notFound } from 'next/navigation';
-import { Mdx } from '@/components/mdx';
-import { Badge } from '@/components/ui/badge';
-import { formatDate } from '@/lib/utils';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { allPosts } from "@/.contentlayer/generated";
+import { notFound } from "next/navigation";
+import { Mdx } from "@/components/mdx";
+import { formatDate } from "@/lib/utils";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { TableOfContents } from "@/components/toc";
 
 interface PostPageProps {
   params: {
@@ -12,7 +12,6 @@ interface PostPageProps {
   };
 }
 
-// Generate static paths for all blog posts
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
     slug: post.slug,
@@ -29,34 +28,60 @@ export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostFromParams(params.slug);
 
   return (
-    <main className="min-h-screen bg-background flex justify-center">
-      <article className="max-w-4xl w-full px-4 sm:px-6 lg:px-8 py-32">
-        <div className="mb-8">
-          <Link
-            href="/blog"
-            className="group inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-8"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Back to blog
-          </Link>
+    <main className="min-h-screen bg-background relative">
+      {/* TOC — fixed LEFT sidebar, xl only */}
+      <aside className="hidden xl:block fixed top-28 left-[max(2rem,calc((100vw-52rem)/2-16rem))] w-[200px]">
+        <TableOfContents />
+      </aside>
 
+      {/* Centered content */}
+      <div className="max-w-[42rem] mx-auto px-5 sm:px-6 pt-24 pb-32">
+        {/* Back link */}
+        <Link
+          href="/blog"
+          className="inline-flex items-center text-sm text-warm hover:text-white transition-colors duration-300 mb-16"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Writing
+        </Link>
 
-          <div className="flex flex-col items-center text-center space-y-2 mb-6">
-            <h1 className="text-4xl font-bold">{post.title}</h1>
-            <time className="text-sm text-muted-foreground">
-              {formatDate(post.date)}
-            </time>
-            <div className="flex flex-wrap justify-center items-center gap-2">
-              {post.tags.map((tag) => (
-                <Badge key={tag} variant="neutral" >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+        <article>
+          {/* Meta row */}
+          <div className="flex flex-wrap items-center gap-2 text-[14px] text-warm mb-8">
+            <time>{formatDate(post.date)}</time>
+            {post.readTime && (
+              <>
+                <span>·</span>
+                <span>{post.readTime}</span>
+              </>
+            )}
+            {post.tags && post.tags.length > 0 && (
+              <>
+                <span>·</span>
+                <span>{post.tags.join(", ")}</span>
+              </>
+            )}
           </div>
-        </div>
-        <Mdx code={post.body.code} />
-      </article>
+
+          {/* Title */}
+          <h1 className="text-[clamp(2.2rem,6vw,3.8rem)] font-garamond font-normal leading-[1.08] tracking-[-0.02em] text-white mb-8">
+            {post.title}
+          </h1>
+
+          {/* Description */}
+          {post.description && (
+            <p className="text-[18px] sm:text-[20px] font-garamond italic text-warm leading-relaxed mb-12">
+              {post.description}
+            </p>
+          )}
+
+          {/* Divider */}
+          <hr className="border-warm/20 mb-16" />
+
+          {/* MDX body */}
+          <Mdx code={post.body.code} />
+        </article>
+      </div>
     </main>
   );
 }

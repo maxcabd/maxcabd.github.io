@@ -1,90 +1,53 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FileText } from "lucide-react";
+import { motion } from "framer-motion";
+
+const navLinks = [
+  { label: "Writing", href: "/blog" },
+  { label: "About", href: "/about" },
+];
 
 export function Navbar() {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center"
+    <motion.header
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-warm/20"
+    >
+      <nav className="max-w-6xl mx-auto px-8 h-16 flex items-center justify-between">
+        <Link href="/" className="group relative inline-block">
+          <span className="text-2xl font-bagel text-white transition-opacity duration-300 group-hover:opacity-0">
+            maxcabd
+          </span>
+          <span
+            aria-hidden="true"
+            className="absolute top-0 left-0 text-2xl font-bagel bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 bg-clip-text text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 whitespace-nowrap"
           >
-            <Link href="/" className="flex items-center">
-              <span className="font-bagel text-2xl bg-gradient-to-r from-pink-600 via-blue-500 to-green-500 text-transparent bg-clip-text">
-                maxcabd
-              </span>
-            </Link>
-          </motion.div>
+            maxcabd
+          </span>
+        </Link>
 
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center space-x-4"
-          >
-            <div
-              className={`nav-link home ${pathname === "/" ? "active" : ""}`}
-            >
-              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
-                <Link href="/">Home</Link>
-              </button>
-            </div>
-            <div
-              className={`nav-link projects ${pathname === "/projects" ? "active" : ""}`}
-            >
-              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
-                <Link href="/projects">Projects</Link>
-              </button>
-            </div>
-            <div
-              className={`nav-link blog ${pathname.startsWith("/blog") ? "active" : ""}`}
-            >
-              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
-                <Link href="/blog">Blog</Link>
-              </button>
-            </div>
-            <div
-              className={`nav-link contact ${pathname === "/contact" ? "active" : ""}`}
-            >
-              <button type="button" className="text-[14px] text-center w-24 h-9 px-4 py-2 font-bold">
-                <Link href="/contact">Contact</Link>
-              </button>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <Link
-              href="/resume-pdf.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 rounded-xl bg-gradient-to-r from-pink-600 via-blue-500 to-green-500 text-white font-medium text-sm hover:opacity-90 transition-opacity"
-            >
-              <FileText className="w-4 h-4 mr-2" />
-              Resume
-            </Link>
-          </motion.div>
+        <div className="flex items-center gap-10">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-[15px] transition-colors duration-300 ${isActive ? "text-white" : "text-warm hover:text-white"
+                  }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
-      </div>
-    </nav>
+      </nav>
+    </motion.header>
   );
 }

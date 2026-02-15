@@ -30,24 +30,35 @@
     * {
         @apply border-border;
     }
+
     body {
         @apply bg-background text-foreground;
     }
 }
+
+/* ── Code blocks (rehype-pretty-code) ── */
 
 [data-rehype-pretty-code-figure] {
     @apply my-8;
 }
 
 [data-rehype-pretty-code-figure] pre {
-    @apply rounded-lg overflow-x-auto text-sm leading-6;
-    padding: 0.75rem 1rem;
+    @apply rounded-xl overflow-x-auto text-sm leading-6;
+    padding: 1.25rem 1.5rem;
+    background-color: #141414 !important;
+    border: 1px solid rgba(163, 157, 149, 0.15);
+}
+
+[data-rehype-pretty-code-figure] pre [data-theme],
+[data-rehype-pretty-code-figure] pre code {
+    background-color: transparent !important;
 }
 
 [data-rehype-pretty-code-figure] code {
     @apply grid;
     counter-reset: line;
     padding: 0;
+    background-color: transparent !important;
 }
 
 [data-rehype-pretty-code-figure] [data-line] {
@@ -62,44 +73,15 @@
     @apply bg-primary/10 rounded;
 }
 
-[data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+[data-rehype-pretty-code-figure] [data-line-numbers]>[data-line]::before {
     @apply text-xs text-muted-foreground mr-4;
     counter-increment: line;
     content: counter(line);
 }
 
-:not(pre) > code {
-    @apply bg-muted px-1.5 py-0.5 rounded-md text-sm font-mono;
-}
-
-.nav-link {
-    @apply inline-block text-[9pt] font-extrabold tracking-wide;
-    @apply transition duration-300 ease-in-out;
-    @apply bg-neutral-900/50 text-neutral-400;
-    border-radius: 10px;
-}
-
-.nav-link button {
-    @apply inline-block whitespace-nowrap;
-    padding: 3px 16px;
-}
-
-.nav-link.home:hover,
-.nav-link.home.active {
-    @apply text-black bg-pink-400;
-}
-
-.nav-link.projects:hover,
-.nav-link.projects.active {
-    @apply text-black bg-yellow-400;
-}
-
-.nav-link.blog:hover,
-.nav-link.blog.active {
-    @apply text-black bg-green-400;
-}
-
-.nav-link.contact:hover,
-.nav-link.contact.active {
-    @apply text-black bg-blue-400;
+/* Inline code */
+:not(pre)>code {
+    @apply px-1.5 py-0.5 rounded-md text-sm font-mono;
+    background-color: #1e1e1e;
+    border: 1px solid rgba(163, 157, 149, 0.1);
 }
