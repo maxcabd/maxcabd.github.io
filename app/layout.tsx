@@ -4,6 +4,7 @@ import { Bagel_Fat_One, EB_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Footer } from "@/components/footer";
+import { Analytics } from "@vercel/analytics/next"
 
 const bagel = Bagel_Fat_One({
   weight: "400",
@@ -83,6 +84,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

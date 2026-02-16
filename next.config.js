@@ -1,4 +1,4 @@
-const { withContentlayer } = require("next-contentlayer");
+const { withContentlayer } = require("next-contentlayer2");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -9,6 +9,7 @@ const nextConfig = {
   images: { unoptimized: true },
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || "",
+
 };
 
 module.exports = withContentlayer(nextConfig);

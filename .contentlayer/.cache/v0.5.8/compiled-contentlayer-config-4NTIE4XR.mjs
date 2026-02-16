@@ -1,5 +1,5 @@
 // contentlayer.config.ts
-import { defineDocumentType, makeSource } from "contentlayer/source-files";
+import { defineDocumentType, makeSource } from "contentlayer2/source-files";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -91,4 +91,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-HDIMVIOI.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-4NTIE4XR.mjs.map

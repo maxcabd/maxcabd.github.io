@@ -25,7 +25,8 @@ async function getPostFromParams(slug: string) {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const post = await getPostFromParams(params.slug);
+  const { slug } = await params;
+  const post = await getPostFromParams(slug);
 
   return (
     <main className="min-h-screen bg-background relative">
