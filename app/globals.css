@@ -57,8 +57,6 @@
     }
 }
 
-/* ── Code blocks (rehype-pretty-code) ── */
-
 [data-rehype-pretty-code-figure] {
     @apply my-8;
 }
@@ -80,14 +78,17 @@
     counter-reset: line;
     padding: 0;
     background-color: transparent !important;
+    gap: 0;
 }
 
 [data-rehype-pretty-code-figure] [data-line] {
-    @apply border-l-2 border-l-transparent px-4;
+    @apply px-4 py-0;
+    border-left: none;
+    background-color: #141414 !important;
 }
 
 [data-rehype-pretty-code-figure] [data-highlighted-line] {
-    @apply border-l-primary bg-primary/10;
+    @apply border-l-2 border-l-primary bg-primary/10;
 }
 
 [data-rehype-pretty-code-figure] [data-highlighted-chars] {

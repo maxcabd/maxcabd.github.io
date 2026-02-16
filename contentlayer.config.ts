@@ -7,7 +7,7 @@ import { type Options } from "rehype-pretty-code";
 
 const prettyCodeOptions: Partial<Options> = {
   theme: "github-dark",
-  keepBackground: true,
+  keepBackground: false,
   onVisitLine(node) {
     if (node.children.length === 0) {
       node.children = [{ type: "text", value: " " }];

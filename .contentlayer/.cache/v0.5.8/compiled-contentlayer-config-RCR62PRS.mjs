@@ -6,7 +6,7 @@ import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 var prettyCodeOptions = {
   theme: "github-dark",
-  keepBackground: true,
+  keepBackground: false,
   onVisitLine(node) {
     if (node.children.length === 0) {
       node.children = [{ type: "text", value: " " }];
@@ -91,4 +91,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-4NTIE4XR.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-RCR62PRS.mjs.map

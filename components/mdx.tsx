@@ -106,24 +106,30 @@ const components = {
       {children}
     </Link>
   ),
-  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
-    const isInline = !className?.includes("language-");
-    if (isInline) {
-      return (
-        <code
-          className="relative rounded bg-[#1e1e1e] border border-warm/10 px-[0.4rem] py-[0.15rem] font-mono text-[0.85em] text-white/90"
-          {...props}
-        />
-      );
-    }
-    return <code className={className} {...props} />;
+  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
+    // If rehype-pretty-code is handling this, just pass through
+
+    return (
+      <pre
+        className="my-8 overflow-x-auto rounded-xl bg-[#1e1e1e] border border-warm/15 p-4 sm:p-5 text-[0.875rem] sm:text-[0.9rem] leading-relaxed -mx-2 sm:mx-0"
+        {...props}
+      />
+    );
   },
-  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre
-      className="my-8 overflow-x-auto rounded-xl bg-[#141414] border border-warm/15 p-4 sm:p-5 text-[0.875rem] sm:text-[0.9rem] leading-relaxed -mx-2 sm:mx-0"
-      {...props}
-    />
-  ),
+  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+    // If it has a language class from rehype-pretty-code, pass through
+    if (className?.includes("language-")) {
+      return <code className={className} {...props} />;
+    }
+    // Inline code
+    return (
+      <code
+        className="relative rounded  px-[0.4rem] py-[0.15rem] font-mono text-[0.85em] text-white/90"
+        {...props}
+      />
+    );
+  },
+
   img: ({
     className,
     ...props
