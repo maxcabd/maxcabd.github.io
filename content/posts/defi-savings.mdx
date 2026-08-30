@@ -16,7 +16,10 @@ That's just the signing layer. Then there's the on-chain execution: approving US
 
 None of these problems are unsolvable, but we found ourselves solving all of them from scratch inside our product, buried in application code with no clear home. When we needed to apply the same logic to a new feature, we copied it. When we found a bug in the yield math, we fixed it in three places. So we set off to extract it into a standalone open-source Python library called defi-savings.
 
-![Taffi Savings](/images/taffi-savings/savings.png)
+<div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+  <img src="/images/taffi-savings/savings.png" width="300" style={{ borderRadius: "12px" }} />
+  <span style={{ fontSize: "13px", color: "#888" }}>The Taffi savings tab — deposit USDC and watch it grow.</span>
+</div>
 
 # Goals
 
@@ -66,7 +69,10 @@ We were also careful about concurrency. A class-level lock on `GnosisSafeSigner`
 
 When a shared treasury earns yield on Aave, how do you know how much belongs to each contributor?
 
-![Taffi Balance](/images/taffi-savings/balance.png)
+<div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+  <img src="/images/taffi-savings/balance.png" width="300" style={{ borderRadius: "12px" }} />
+  <span style={{ fontSize: "13px", color: "#888" }}>Per-contributor yield breakdown — Alice and Bob share a single Aave position.</span>
+</div>
 
 The naive approach of subtracting a user's snapshot from the full protocol balance breaks immediately with multiple contributors. If the Aave position holds $4,100 and Alice contributed $1,000 while Bob contributed $3,000, subtracting Alice's snapshot alone assigns her the entire pool's growth.
 

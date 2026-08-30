@@ -1,101 +1,42 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 
 
-/* ── Work Experience Data (add more entries here) ── */
+/* ── Work Experience Data ── */
 const experience = [
   {
-    company: "Railo",
-    role: "Founding Engineer",
-    description: "Building SDKs to power platform payouts using the benefits of stablecoin rails.",
-    year: "2026-Present",
-  },
-  {
-    company: "Blinked",
-    role: "Founding Engineer",
-    description: "Built the end-to-end platform in React Native as well as the backend in FastAPI making it seemless to sell expirable digital assets.",
-    year: "2025-Present",
+    company: "Taffi",
+    role: "Founder & Software Engineer",
+    description: "Built a cross-border payments mobile app from 0-to-1 using React Native, TypeScript, Expo, FastAPI, PostgreSQL, and Redis, owning the mobile experience, backend APIs, and transaction workflows.",
+    year: "Jan 2026 - Present",
   },
   {
     company: "Canada Revenue Agency",
-    role: "Frontend Engineer",
-    description: "React · WET4 · PostgreSQL",
-    year: "2024",
+    role: "Software Engineer Intern",
+    description: "Optimized PostgreSQL queries reducing latency by 30% across production tax reconciliation systems, and built backend services supporting audit and compliance workflows used by thousands of CRA employees.",
+    year: "Aug 2024 - Dec 2024",
   },
-
+  {
+    company: "Canadian Nuclear Safety Commission",
+    role: "Software Engineer Intern",
+    description: "Built a local-first React application for regulatory inspectors, implementing offline workflows, structured data collection, and reusable components across regulatory inspection workflows.",
+    year: "Sep 2021 - Jan 2022",
+  },
 ];
 
-/* ── Social Links ── */
-const socials = [
-  { icon: Mail, href: "mailto:max.cabd@gmail.com", label: "Email" },
-  { icon: Github, href: "https://github.com/maxcabd", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/maxcabd", label: "LinkedIn" },
-];
-
-export default function ContactPage() {
+export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
       <div className="max-w-3xl mx-auto px-5 sm:px-6 pt-28 pb-32">
-        {/* ── Hero: Photo + Bio ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-8 sm:gap-10"
-        >
-          {/* Photo */}
-          <div className="w-36 h-44 sm:w-44 sm:h-52 relative rounded-2xl overflow-hidden flex-shrink-0">
-            <Image
-              src="/images/me.jpg"
-              alt="Max"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          {/* Bio */}
-          <div className="flex-1">
-            <h1 className="text-[clamp(2rem,5vw,3rem)] font-garamond font-normal leading-[1.1] tracking-[-0.02em] text-white">
-              Max Abdullahi
-            </h1>
-            <p className="mt-3 text-[15px] sm:text-[16px] text-warm leading-relaxed max-w-md">
-              Building frictionless global payment systems at scale. Let's connect.
-            </p>
-
-            {/* Social icons */}
-            <div className="mt-5 flex items-center justify-center sm:justify-start gap-5">
-              {socials.map((social) => (
-                <Link
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="text-warm hover:text-white transition-colors duration-300"
-                >
-                  <social.icon className="w-5 h-5" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── Divider ── */}
-        <hr className="border-warm/15 my-16" />
 
         {/* ── Work Experience ── */}
         <motion.section
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
         >
           <h2 className="text-center sm:text-left text-[clamp(1.5rem,3vw,1.8rem)] font-garamond font-normal text-white mb-2">
             Work Experience
