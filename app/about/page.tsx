@@ -9,20 +9,20 @@ const experience = [
   {
     company: "Taffi",
     role: "Founder & Software Engineer",
-    description: "Built a cross-border payments mobile app from 0-to-1 using React Native, TypeScript, Expo, FastAPI, PostgreSQL, and Redis, owning the mobile experience, backend APIs, and transaction workflows.",
-    year: "Jan 2026 - Present",
+    description: "Built a cross-border payments mobile app from 0 to 1.",
+    year: "Present",
   },
   {
     company: "Canada Revenue Agency",
     role: "Software Engineer Intern",
-    description: "Optimized PostgreSQL queries reducing latency by 30% across production tax reconciliation systems, and built backend services supporting audit and compliance workflows used by thousands of CRA employees.",
-    year: "Aug 2024 - Dec 2024",
+    description: "Cut query latency by 30% across production tax reconciliation systems.",
+    year: "2024",
   },
   {
     company: "Canadian Nuclear Safety Commission",
     role: "Software Engineer Intern",
-    description: "Built a local-first React application for regulatory inspectors, implementing offline workflows, structured data collection, and reusable components across regulatory inspection workflows.",
-    year: "Sep 2021 - Jan 2022",
+    description: "Built a local-first React app for regulatory inspectors with offline workflows.",
+    year: "2022",
   },
 ];
 
