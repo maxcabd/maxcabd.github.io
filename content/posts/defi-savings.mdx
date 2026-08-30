@@ -1,0 +1,106 @@
+---
+title: Building a wallet-agnostic on-chain savings layer in Python
+description: How we extracted our DeFi savings layer into an open-source Python library with pluggable signers, a pure yield distribution function, and no database opinions.
+date: 2026-08-30
+author: Mohamed Abdullahi
+readTime: 6 min read
+---
+
+Most features within a fintech app revolve around money. But adding yield to that money introduces a layer of complexity that most fintech engineers didn't sign up for.
+
+Let's take depositing $1,000 USDC into a savings product as an example.
+
+For a solo developer testing locally, you want to sign with a single private key, get a transaction hash, and move on. For a company treasury requiring multiple approvals, you need a 2-of-N multisig and a completely different signing flow. For a team using an external custody provider, neither of those works. For a user's personal wallet, signing happens on their device and not your server at all.
+
+That's just the signing layer. Then there's the on-chain execution: approving USDC, supplying to Aave, reading aToken balances, computing live APY from raw RAY values. And if multiple contributors share a treasury, how do you fairly distribute the yield that accrues? How do you avoid crediting yield that already existed before a new deposit? How do you prevent a race condition where two concurrent withdrawals both pass a balance check?
+
+None of these problems are unsolvable, but we found ourselves solving all of them from scratch inside our product, buried in application code with no clear home. When we needed to apply the same logic to a new feature, we copied it. When we found a bug in the yield math, we fixed it in three places. So we set off to extract it into a standalone open-source Python library called defi-savings.
+
+![Taffi Savings](/images/taffi-savings/savings.png)
+
+# Goals
+
+We had a few goals going in. Consolidate the execution and yield logic so that new features get it right the first time without reading through product code to understand the invariants. Make it wallet-agnostic so that a developer using a Gnosis Safe, an EOA hot wallet, a Coinbase custody account, or anything else can use the same library. Keep the pure logic pure so that the proportional yield math is testable without a blockchain, a database, or a network connection. And stay out of storage entirely, because who holds what slice of the treasury is the application's problem and not the library's.
+
+That last goal took us a while to get right.
+
+# The wallet problem
+
+Our original implementation had Aave and Gnosis Safe deeply entangled. The provider class knew how to encode calldata and how to execute it through a 2-of-2 Safe, fetching the nonce, computing the EIP-712 hash, sorting signers by address, packing signatures, and submitting `execTransaction`. Useful code, but completely unusable if your treasury is not a Gnosis Safe.
+
+The fix was to separate what from how. `AaveProvider` now builds the calldata and hands it to a `Signer`:
+
+```python
+class Signer(ABC):
+    @property
+    def address(self) -> str: ...   # where the USDC lives
+
+    @property
+    def w3(self) -> Web3: ...       # used for read-only calls
+
+    def execute(self, calls: list[Call]) -> str: ...  # sign and submit
+```
+
+`AaveProvider` calls `signer.execute(calls)` and returns a transaction hash. It has no idea what happens next. `GnosisSafeSigner` handles the multisig flow with atomic MultiSend batching, while `EOASigner` does the same thing with a single private key. Anyone with a different custody setup implements one method and gets the full Aave integration for free.
+
+```python
+# Single private key
+provider = AaveProvider(EOASigner(private_key, rpc_url))
+
+# Gnosis Safe 2-of-2
+provider = AaveProvider(GnosisSafeSigner(safe_address, key1, key2, rpc_url))
+
+# Your own wallet type
+provider = AaveProvider(MyCoinbaseWalletSigner(...))
+```
+
+# Signing without gnosis-py
+
+The Gnosis Safe Python library carries significant baggage. We found ourselves fighting with dependency conflicts, sparse documentation, and an API surface larger than we needed. What we actually needed was narrow: compute the Safe's transaction hash, sign it with two keys, and submit `execTransaction`.
+
+It turned out we could do this entirely through the Safe's own view functions. `getTransactionHash` computes the correct hash on-chain, so there is no need to replicate the EIP-712 encoding ourselves. From there, eth_account handles the signing, and the Safe's `checkNSignatures` logic recognises the eth_sign style without additional configuration. The whole implementation is under 80 lines.
+
+We were also careful about concurrency. A class-level lock on `GnosisSafeSigner` serialises concurrent calls so two simultaneous operations never race on the Safe nonce, which is a real concern when background jobs and user-initiated withdrawals can collide.
+
+# The yield math
+
+When a shared treasury earns yield on Aave, how do you know how much belongs to each contributor?
+
+![Taffi Balance](/images/taffi-savings/balance.png)
+
+The naive approach of subtracting a user's snapshot from the full protocol balance breaks immediately with multiple contributors. If the Aave position holds $4,100 and Alice contributed $1,000 while Bob contributed $3,000, subtracting Alice's snapshot alone assigns her the entire pool's growth.
+
+The correct invariant is that after every yield distribution, the sum of all snapshots equals the sum of all balances. Growth is then:
+
+```python
+total_growth = protocol_balance - sum(last_snapshot for all contributors)
+```
+
+Each contributor's share is proportional to their balance. We extracted this into `distribute_yield()`, a pure function that takes a list of snapshots and the current protocol balance and returns the yield amount per address:
+
+```python
+distributions = distribute_yield(snapshots, provider.position_balance())
+# [("0xAlice", Decimal("25.000000")), ("0xBob", Decimal("75.000000"))]
+```
+
+No network calls. No database. No async. The function is deterministic and covered by eleven unit tests that run in well under a second. When we found an edge case in the rounding behaviour, the test suite caught it immediately.
+
+# Staying out of storage
+
+Our first version of the library shipped with a database adapter layer, a Postgres implementation, SQL migrations, and the works. We removed it before the first release.
+
+The library's job is the on-chain part. Who tracks whose slice is a product decision and different applications will make it differently. One team stores contributor balances in Postgres. Another uses a Merkle tree. A third only has a single treasury address and does not need per-contributor tracking at all. Shipping a database layer would have forced a choice on all of them.
+
+What we kept is `distribute_yield()`. If you do need per-contributor accounting, the math is there. What you do with the results is entirely yours.
+
+# Where things stand
+
+The library ships with two concrete signers (`EOASigner` and `GnosisSafeSigner`) and one provider (`AaveProvider` for USDC on Base). Adding a new provider means implementing four methods on `YieldProvider`. Adding a new signer means implementing two properties and one method on `Signer`.
+
+We're currently using it in production and have thoroughly enjoyed working on it. If you're building a savings product, a yield-bearing treasury, or anything else that needs Python and Aave in the same sentence, we highly recommend you take a look.
+
+```bash
+uv add defi-savings
+```
+
+The library is open source at [github.com/your-org/defi-savings](https://github.com/your-org/defi-savings). Issues and pull requests are always welcome.
