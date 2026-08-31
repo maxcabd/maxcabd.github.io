@@ -89,7 +89,7 @@ distributions = distribute_yield(snapshots, provider.position_balance())
 # [("0xAlice", Decimal("25.000000")), ("0xBob", Decimal("75.000000"))]
 ```
 
-No network calls. No database. No async. The function is deterministic and covered by eleven unit tests that run in well under a second. When we found an edge case in the rounding behaviour, the test suite caught it immediately.
+No network calls. No database. No async. The function is deterministic and covered by a suite of unit tests that run in well under a second. When we found an edge case in the rounding behaviour, the test suite caught it immediately.
 
 # Staying out of storage
 
@@ -99,11 +99,57 @@ The library's job is the on-chain part. Who tracks whose slice is a product deci
 
 What we kept is `distribute_yield()`. If you do need per-contributor accounting, the math is there. What you do with the results is entirely yours.
 
+# Choosing a protocol
+
+Once the execution layer was solid, the next question was where to route the funds. Aave is a reasonable default, but it is one option among many. On Base alone, Morpho MetaMorpho vaults regularly post higher APYs, and Compound v3 and Moonwell are worth comparing depending on the risk profile.
+
+Rather than hard-coding a protocol choice, we added `fetch_rates`, which queries DefiLlama's yield API and returns pools sorted by APY:
+
+```python
+from defi_savings.rates import fetch_rates
+
+pools = fetch_rates(chain="Base", symbol="USDC")
+for p in pools:
+    print(f"{p.project:25s}  {p.apy:.2f}%  TVL ${p.tvl_usd:>12,.0f}")
+```
+
+```
+morpho-blue               8.14%  TVL $  357,000,000
+compound-v3               5.92%  TVL $   82,000,000
+aave-v3                   4.81%  TVL $  610,000,000
+moonwell                  4.23%  TVL $   35,000,000
+```
+
+For cases where you want a single ranked answer rather than a list to inspect, `score_pools` applies a weighted composite of APY, gas cost, and TVL — each dimension min-max normalised across the pool set, with APY weighted at 60%, gas at 25%, and TVL at 15% by default:
+
+```python
+from defi_savings.scoring import score_pools
+
+ranked = score_pools(pools, gas_cost_usd={"morpho-blue": 0.12, "aave-v3": 0.05})
+```
+
+The weights are configurable if your product has different priorities.
+
+For any pool that exposes an ERC-4626 interface — which covers Morpho MetaMorpho, Compound v3, Euler, and most modern vaults — `Erc4626Provider` connects to it in a few lines with no protocol-specific boilerplate:
+
+```python
+from defi_savings import Erc4626Provider, GnosisSafeSigner
+
+provider = Erc4626Provider(
+    vault_address = "0xCBeeF01994E24a60f7DCB8De98e75AD8BD4Ad60d",
+    signer        = GnosisSafeSigner(safe_address, key1, key2, rpc_url),
+    name          = "morpho-sirloin-usdc-base",
+    apy_fn        = lambda: fetch_rates("Base", "SIRLOINUSDC")[0].apy,
+)
+```
+
+`deposit`, `withdraw`, and `position_balance` work identically to `AaveProvider`. The APY comes from wherever you point `apy_fn` — DefiLlama, a subgraph, a proprietary endpoint, or a subclass override.
+
 # Where things stand
 
-The library ships with two concrete signers (`EOASigner` and `GnosisSafeSigner`) and one provider (`AaveProvider` for USDC on Base). Adding a new provider means implementing four methods on `YieldProvider`. Adding a new signer means implementing two properties and one method on `Signer`.
+The library ships with two concrete signers (`EOASigner` and `GnosisSafeSigner`) and two providers: `AaveProvider` for Aave on Base, and `Erc4626Provider` for any ERC-4626 compliant vault on any EVM chain. Adding a fully custom provider means implementing four methods on `YieldProvider`. Adding a new signer means implementing two properties and one method on `Signer`.
 
-We're currently using it in production and have thoroughly enjoyed working on it. If you're building a savings product, a yield-bearing treasury, or anything else that needs Python and Aave in the same sentence, we highly recommend you take a look.
+We're currently using it in production and have thoroughly enjoyed working on it. If you're building a savings product, a yield-bearing treasury, or anything else that needs Python and on-chain yield in the same sentence, we highly recommend you take a look.
 
 ```bash
 uv add defi-savings
