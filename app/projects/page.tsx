@@ -12,6 +12,18 @@ interface GitHubRepo {
   fork: boolean;
 }
 
+const EXCLUDED = new Set([
+  "BinRead",
+  "mot-unpack-rs",
+  "message-info-localizer",
+  "cosprm",
+  "xml2fcv",
+  "anm-clean",
+  "png2xfbin",
+  "maxcabd.github.io",
+  "accprm",
+]);
+
 async function getRepos(): Promise<GitHubRepo[]> {
   try {
     const res = await fetch(
@@ -21,7 +33,7 @@ async function getRepos(): Promise<GitHubRepo[]> {
     if (!res.ok) return [];
     const repos: GitHubRepo[] = await res.json();
     return repos
-      .filter((r) => !r.fork)
+      .filter((r) => !r.fork && !EXCLUDED.has(r.name))
       .sort(
         (a, b) =>
           new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime(),
@@ -56,7 +68,7 @@ export default async function ProjectsPage() {
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-medium text-white hover:text-blue-400 transition-colors duration-200"
+                    className="font-medium bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 bg-clip-text text-transparent"
                   >
                     {repo.name}
                   </Link>
