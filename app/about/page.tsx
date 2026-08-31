@@ -9,19 +9,19 @@ const experience = [
   {
     company: "Taffi",
     role: "Founder & Software Engineer",
-    description: "Built a cross-border payments mobile app from 0 to 1.",
+    description: "Built the cross-border peer-to-peer stablecoin payments app for iOS and Android.",
     year: "Present",
   },
   {
     company: "Canada Revenue Agency",
     role: "Software Engineer Intern",
-    description: "Cut query latency by 30% across production tax reconciliation systems.",
+    description: "Worked on the WET4 framework to modernize tax reconciliation tooling.",
     year: "2024",
   },
   {
     company: "Canadian Nuclear Safety Commission",
     role: "Software Engineer Intern",
-    description: "Built a local-first React app for regulatory inspectors with offline workflows.",
+    description: "Created the React app for offline compliance checks for regulatory inspectors.",
     year: "2022",
   },
 ];
