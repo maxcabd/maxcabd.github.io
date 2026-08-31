@@ -120,7 +120,7 @@ aave-v3                   4.81%  TVL $  610,000,000
 moonwell                  4.23%  TVL $   35,000,000
 ```
 
-For cases where you want a single ranked answer rather than a list to inspect, `score_pools` applies a weighted composite of APY, gas cost, and TVL — each dimension min-max normalised across the pool set, with APY weighted at 60%, gas at 25%, and TVL at 15% by default:
+For cases where you want a single ranked answer rather than a list to inspect, `score_pools` applies a weighted composite of APY, gas cost, and TVL, each dimension min-max normalised across the pool set, with APY weighted at 60%, gas at 25%, and TVL at 15% by default:
 
 ```python
 from defi_savings.scoring import score_pools
@@ -130,7 +130,7 @@ ranked = score_pools(pools, gas_cost_usd={"morpho-blue": 0.12, "aave-v3": 0.05})
 
 The weights are configurable if your product has different priorities.
 
-For any pool that exposes an ERC-4626 interface — which covers Morpho MetaMorpho, Compound v3, Euler, and most modern vaults — `Erc4626Provider` connects to it in a few lines with no protocol-specific boilerplate:
+For any pool that exposes an ERC-4626 interface (Morpho MetaMorpho, Compound v3, Euler, and most modern vaults), `Erc4626Provider` connects to it in a few lines with no protocol-specific boilerplate:
 
 ```python
 from defi_savings import Erc4626Provider, GnosisSafeSigner
@@ -143,7 +143,7 @@ provider = Erc4626Provider(
 )
 ```
 
-`deposit`, `withdraw`, and `position_balance` work identically to `AaveProvider`. The APY comes from wherever you point `apy_fn` — DefiLlama, a subgraph, a proprietary endpoint, or a subclass override.
+`deposit`, `withdraw`, and `position_balance` work identically to `AaveProvider`. The APY comes from wherever you point `apy_fn`: DefiLlama, a subgraph, a proprietary endpoint, or a subclass override.
 
 # Where things stand
 
