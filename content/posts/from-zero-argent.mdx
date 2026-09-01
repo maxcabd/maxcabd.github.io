@@ -1,0 +1,49 @@
+---
+title: "From Zero: How Argent built a crypto wallet for people who hate crypto wallets"
+description: Seed phrases and gas fees kept self-custody out of reach for most people. Argent set out to fix that without giving up on decentralisation.
+date: 2026-07-31
+author: Mohamed Abdullahi
+readTime: 5 min read
+---
+
+The standard onboarding flow for a self-custody crypto wallet goes something like this. You install an app. You are shown a sequence of 12 to 24 random words and told to write them down somewhere safe, never photograph them, never lose them, and never share them with anyone, because if you do, your funds are gone forever. Then you are asked to type those words back in the correct order to prove you copied them.
+
+If you succeed at this without confusion, you are now the sole custodian of your own cryptographic key. One phishing link, one forgotten word, one corrupted backup, and everything in your wallet is permanently inaccessible.
+
+Itamar Lesuisse, Gerald Goldstein, and Julien Niset looked at this onboarding experience and saw the reason mainstream adoption had stalled. In 2017, they founded Argent to replace it.
+
+# The seed phrase problem
+
+The seed phrase exists because self-custody wallets need some way to let users recover access if they lose their device. The private key is a large number. Humans can't memorise large numbers reliably, so the BIP-39 standard encodes the key as a sequence of common English words.
+
+The problem is that this shifts the entire burden of security onto the user. Banks have fraud departments, account recovery processes, customer support, and regulatory protection. A seed phrase wallet has none of those things. One mistake and the money is gone.
+
+For people who grew up with "forgot your password? click here" as the default recovery model, the seed phrase wasn't just intimidating. It was a fundamentally different model of who is responsible for your funds, and it was being introduced without any of the infrastructure that makes that responsibility manageable.
+
+# Guardians instead of seeds
+
+Argent's solution was a smart contract wallet with social recovery.
+
+Instead of a seed phrase, Argent let users designate guardians: trusted devices, close contacts, or even Argent itself. If you lost access to your wallet, your guardians could collectively approve recovery and restore your access to a new device. No single guardian could act alone. The threshold was configurable.
+
+This was a meaningful change. It meant that losing your phone did not mean losing your funds. It meant that a phishing attack that captured your device credentials was not automatically catastrophic. And it meant that the mental model for recovery was "I have people and devices I trust" rather than "I have a piece of paper I must never lose or show anyone."
+
+Argent also abstracted gas fees early on, using meta-transactions to allow users to pay for Ethereum transactions without needing to hold ETH separately. For a user who just wanted to use a DeFi application, the requirement to buy ETH first just to pay for the action was a significant barrier. Removing it changed the experience.
+
+# Expanding to StarkNet
+
+As Ethereum's gas costs became prohibitive during periods of high demand, Argent expanded to StarkNet, a zero-knowledge rollup that settles on Ethereum but processes transactions at much lower cost.
+
+Argent X, a browser extension wallet for StarkNet, brought the same approach to a new environment: simpler UX, no mandatory seed phrase exposure, and a cleaner interface than the wallets that dominated the space.
+
+The StarkNet move also put Argent close to a technology that many researchers believed would eventually provide Ethereum's scalability. Getting embedded in an ecosystem early, when the developer tooling is rough and the user base is small, is one of the few durable advantages a wallet can accumulate.
+
+# What Argent proved
+
+Self-custody is not inherently complicated. The complication comes from building tools that expose the underlying cryptography instead of abstracting it.
+
+Banks do not explain private key cryptography when you open a checking account. They give you a username, a password, and a support number to call if something goes wrong. Not because they are hiding complexity but because the complexity is not the point. Moving your money safely is the point.
+
+Argent's argument was that crypto wallets could work the same way, that you could have the properties of self-custody without requiring users to become amateur cryptographers, and that doing so would open the technology to the people for whom the existing wallets were simply not designed.
+
+The wallet does not yet have the user base of a mainstream bank. But it demonstrated that the UX problem was solvable, and that mattered.
