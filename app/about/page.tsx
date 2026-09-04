@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/navbar";
+import Link from "next/link";
 
 
 /* ── Work Experience Data ── */
@@ -31,6 +32,23 @@ export default function AboutPage() {
     <main className="min-h-screen bg-background">
       <Navbar />
       <div className="max-w-3xl mx-auto px-5 sm:px-6 pt-28 pb-32">
+
+        {/* ── Resume ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center sm:text-left mb-10"
+        >
+          <Link
+            href="/resume-pdf.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[14px] text-warm hover:text-white transition-colors duration-300 underline underline-offset-4"
+          >
+            View Resume (PDF)
+          </Link>
+        </motion.div>
 
         {/* ── Work Experience ── */}
         <motion.section
