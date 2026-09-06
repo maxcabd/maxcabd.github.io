@@ -7,23 +7,29 @@ import { allPosts } from "@/.contentlayer/generated";
 import { compareDesc, format } from "date-fns";
 
 export function HeroSection() {
+  const lastUpdated = allPosts
+    .filter((post) => post.published && new Date(post.date) <= new Date())
+    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))[0];
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="pt-40 pb-24 px-6"
+      className="pt-28 pb-16 px-6"
     >
-      <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-[clamp(3rem,8vw,6rem)] font-garamond font-semibold leading-[1.05] tracking-[-0.02em] text-white">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="font-ginto text-[15px] font-normal text-white">
           Max Abdullahi
         </h1>
 
-        <p className="mt-6 text-[15px] font-light tracking-wide italic font-garamond text-warm">
+        {lastUpdated && (
+          <p className="mt-1 text-[13px] text-warm/70">
+            Updated {format(new Date(lastUpdated.date), "MMM d, yyyy")}
+          </p>
+        )}
 
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-2 text-[13px] text-warm tracking-widest">
+        <div className="mt-8 flex items-center gap-2 text-[13px] text-warm">
           <span>Also on</span>
           {[
             { label: "GitHub", href: "https://github.com/maxcabd" },
@@ -62,7 +68,7 @@ export function BlogSection() {
       transition={{ duration: 0.6, delay: 0.1 }}
       className="px-6 pb-32"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-2xl mx-auto">
         <p className="text-[13px] text-warm mb-6">
           Writing
         </p>
@@ -79,7 +85,7 @@ export function BlogSection() {
                   hover:bg-warm/[0.03] -mx-4 px-4 rounded-lg transition-colors duration-300"
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-[15px] text-white/85 font-normal leading-snug group-hover:text-white transition-colors duration-300">
+                  <h3 className="font-ginto text-[15px] text-white/85 font-normal leading-snug group-hover:text-white transition-colors duration-300">
                     {post.title}
                   </h3>
                   <span className="shrink-0 text-[12px] text-warm/70">

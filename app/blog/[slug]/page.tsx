@@ -72,7 +72,7 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
 
           {/* Title */}
-          <h1 className="text-[clamp(1.4rem,3vw,1.8rem)] font-friends font-normal leading-[1.3] tracking-[-0.01em] text-white mb-4">
+          <h1 className="text-[clamp(1.4rem,3vw,1.8rem)] font-ginto font-normal leading-[1.3] tracking-[-0.01em] text-white mb-4">
             {post.title}
           </h1>
 

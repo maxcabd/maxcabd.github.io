@@ -21,7 +21,7 @@ export default function BlogPage() {
           {posts.map((post) => (
             <Link key={post.slug} href={post.url}>
               <div className="group py-4 border-b border-warm/10 cursor-pointer hover:bg-warm/[0.03] -mx-4 px-4 rounded-lg transition-colors duration-300">
-                <h2 className="text-[15px] font-normal text-white/85 leading-snug group-hover:text-white transition-colors duration-300">
+                <h2 className="font-ginto text-[15px] font-normal text-white/85 leading-snug group-hover:text-white transition-colors duration-300">
                   {post.title}
                 </h2>
 
