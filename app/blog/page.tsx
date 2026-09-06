@@ -9,12 +9,10 @@ export default function BlogPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="max-w-3xl mx-auto px-5 sm:px-6 pt-28 pb-32">
+      <div className="max-w-2xl mx-auto px-5 sm:px-6 pt-28 pb-32">
         {/* Header */}
-        <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-garamond font-normal leading-[1.1] tracking-[-0.02em] text-white mb-4">
-          Writing
-        </h1>
-        <p className="text-[16px] text-warm mb-16">
+        <h1 className="text-[15px] text-warm mb-1">Writing</h1>
+        <p className="text-[13px] text-warm/70 mb-10">
           Projects, thoughts, inspiration.
         </p>
 
@@ -22,18 +20,18 @@ export default function BlogPage() {
         <div>
           {posts.map((post) => (
             <Link key={post.slug} href={post.url}>
-              <div className="group py-8 border-b border-warm/15 cursor-pointer hover:bg-warm/[0.03] -mx-4 px-4 rounded-lg transition-colors duration-300">
-                <h2 className="text-[clamp(1.2rem,3vw,1.5rem)] font-medium text-white/90 leading-snug group-hover:text-white transition-colors duration-300">
+              <div className="group py-4 border-b border-warm/10 cursor-pointer hover:bg-warm/[0.03] -mx-4 px-4 rounded-lg transition-colors duration-300">
+                <h2 className="text-[15px] font-normal text-white/85 leading-snug group-hover:text-white transition-colors duration-300">
                   {post.title}
                 </h2>
 
                 {post.description && (
-                  <p className="mt-2 text-[15px] text-warm leading-relaxed max-w-2xl">
+                  <p className="mt-1.5 text-[13px] text-warm/80 leading-relaxed max-w-xl">
                     {post.description}
                   </p>
                 )}
 
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-[13px] text-warm">
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-[12px] text-warm/70">
                   <time>{format(new Date(post.date), "MMMM d, yyyy")}</time>
                   {post.tags && post.tags.length > 0 && (
                     <>

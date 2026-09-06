@@ -63,8 +63,8 @@ export function BlogSection() {
       className="px-6 pb-32"
     >
       <div className="max-w-3xl mx-auto">
-        <p className="text-[11px] text-warm tracking-[0.2em] uppercase mb-10">
-          Recent
+        <p className="text-[13px] text-warm mb-6">
+          Writing
         </p>
 
         <div className="space-y-0">
@@ -75,20 +75,16 @@ export function BlogSection() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className="group py-6 border-b border-warm/20 first:pt-0 cursor-pointer
-                  hover:bg-warm/5 -mx-4 px-4 rounded-lg transition-colors duration-300"
+                className="group py-3.5 border-b border-warm/10 first:pt-0 cursor-pointer
+                  hover:bg-warm/[0.03] -mx-4 px-4 rounded-lg transition-colors duration-300"
               >
-                <h3 className="text-[17px] text-white/85 font-normal leading-relaxed group-hover:text-white transition-colors duration-300">
-                  {post.title}
-                </h3>
-                <div className="mt-1.5 flex items-center gap-3 text-[13px] text-warm">
-                  <span>{format(new Date(post.date), "MMM yyyy")}</span>
-                  {post.tags && post.tags.length > 0 && (
-                    <>
-                      <span>·</span>
-                      <span>{post.tags.slice(0, 2).join(", ")}</span>
-                    </>
-                  )}
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="text-[15px] text-white/85 font-normal leading-snug group-hover:text-white transition-colors duration-300">
+                    {post.title}
+                  </h3>
+                  <span className="shrink-0 text-[12px] text-warm/70">
+                    {format(new Date(post.date), "MMM yyyy")}
+                  </span>
                 </div>
               </motion.div>
             </Link>
@@ -97,10 +93,10 @@ export function BlogSection() {
 
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 mt-10 text-[13px] text-warm hover:text-white transition-colors duration-300"
+          className="inline-flex items-center gap-1.5 mt-8 text-[12px] text-warm hover:text-white transition-colors duration-300"
         >
           All posts
-          <ArrowRight className="w-3.5 h-3.5" />
+          <ArrowRight className="w-3 h-3" />
         </Link>
       </div>
     </motion.section>

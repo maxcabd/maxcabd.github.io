@@ -48,7 +48,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
         <article>
           {/* Meta row */}
-          <div className="flex flex-wrap items-center gap-2 text-[14px] text-warm mb-8">
+          <div className="flex flex-wrap items-center gap-2 text-[13px] text-warm mb-6">
             <time>{formatDate(post.date)}</time>
             {post.readTime && (
               <>
@@ -72,13 +72,13 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
 
           {/* Title */}
-          <h1 className="text-[clamp(2.2rem,6vw,3.8rem)] font-friends font-normal leading-[1.08] tracking-[-0.02em] text-white mb-8">
+          <h1 className="text-[clamp(1.4rem,3vw,1.8rem)] font-friends font-normal leading-[1.3] tracking-[-0.01em] text-white mb-4">
             {post.title}
           </h1>
 
           {/* Description */}
           {post.description && (
-            <p className="text-[18px] sm:text-[20px] font-friends italic text-warm leading-relaxed mb-12">
+            <p className="text-[15px] sm:text-[16px] font-friends italic text-warm leading-relaxed mb-10">
               {post.description}
             </p>
           )}
