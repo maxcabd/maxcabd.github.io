@@ -6,6 +6,9 @@ import Link from "next/link";
 import { allPosts } from "@/.contentlayer/generated";
 import { compareDesc, format } from "date-fns";
 
+const bioLink =
+  "text-white/90 underline decoration-warm/40 underline-offset-2 hover:text-white hover:decoration-white/60 transition-colors duration-300";
+
 export function HeroSection() {
   const lastUpdated = allPosts
     .filter((post) => post.published && new Date(post.date) <= new Date())
@@ -29,25 +32,87 @@ export function HeroSection() {
           </p>
         )}
 
-        <div className="mt-8 flex items-center gap-2 text-[13px] text-warm">
-          <span>Also on</span>
-          {[
-            { label: "GitHub", href: "https://github.com/maxcabd" },
-            { label: "LinkedIn", href: "https://linkedin.com/in/maxcabd" },
-            { label: "Email", href: "mailto:max.cabd@gmail.com" },
-          ].map((link, i) => (
-            <span key={link.label} className="flex items-center gap-2">
-              {i > 0 && <span>·</span>}
-              <Link
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors duration-300"
-              >
-                {link.label}
-              </Link>
-            </span>
-          ))}
+        <div className="mt-8 space-y-5 max-w-xl font-ginto text-[15px] leading-relaxed text-white/80">
+          <p>
+            I&apos;m a computer science student, currently working at Taffi as
+            a software engineer.
+          </p>
+
+          <p>
+            I founded{" "}
+            <Link href="/projects" className={bioLink}>
+              Taffi
+            </Link>
+            , a consumer fintech app that lets people send money to each
+            other across borders for free. I&apos;ve also interned at the CRA
+            and the CNSC.
+          </p>
+
+          <p>
+            I enjoy building and maintaining open source tools, such as{" "}
+            <Link
+              href="https://github.com/maxcabd/ap2-rs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={bioLink}
+            >
+              ap2-rs
+            </Link>
+            ,{" "}
+            <Link
+              href="https://github.com/maxcabd/defi-savings"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={bioLink}
+            >
+              defi-savings
+            </Link>
+            ,{" "}
+            <Link
+              href="https://github.com/maxcabd/debin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={bioLink}
+            >
+              debin
+            </Link>
+            , and{" "}
+            <Link
+              href="https://github.com/maxcabd/nuccbin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={bioLink}
+            >
+              nuccbin
+            </Link>
+            .
+          </p>
+
+          <p>
+            You can find me on{" "}
+            <Link
+              href="https://github.com/maxcabd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={bioLink}
+            >
+              GitHub
+            </Link>{" "}
+            and{" "}
+            <Link
+              href="https://linkedin.com/in/maxcabd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={bioLink}
+            >
+              LinkedIn
+            </Link>
+            , or reach me at{" "}
+            <Link href="mailto:max.cabd@gmail.com" className={bioLink}>
+              max.cabd@gmail.com
+            </Link>
+            .
+          </p>
         </div>
       </div>
     </motion.section>
