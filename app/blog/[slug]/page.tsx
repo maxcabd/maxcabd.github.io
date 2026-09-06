@@ -56,13 +56,6 @@ export default async function PostPage({ params }: PostPageProps) {
                 <span>{post.readTime}</span>
               </>
             )}
-            {post.author && (
-              <>
-                <span>·</span>
-                <span className="bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 bg-clip-text text-transparent font-bold"
-                >{post.author}</span>
-              </>
-            )}
             {post.tags && post.tags.length > 0 && (
               <>
                 <span>·</span>
@@ -75,13 +68,6 @@ export default async function PostPage({ params }: PostPageProps) {
           <h1 className="text-[clamp(1.4rem,3vw,1.8rem)] font-ginto font-normal leading-[1.3] tracking-[-0.01em] text-white mb-4">
             {post.title}
           </h1>
-
-          {/* Description */}
-          {post.description && (
-            <p className="text-[15px] sm:text-[16px] font-friends italic text-warm leading-relaxed mb-10">
-              {post.description}
-            </p>
-          )}
 
           {/* Divider */}
           <hr className="border-warm/20 mb-16" />

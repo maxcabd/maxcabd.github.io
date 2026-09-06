@@ -25,12 +25,6 @@ export default function BlogPage() {
                   {post.title}
                 </h2>
 
-                {post.description && (
-                  <p className="mt-1.5 text-[13px] text-warm/80 leading-relaxed max-w-xl">
-                    {post.description}
-                  </p>
-                )}
-
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-[12px] text-warm/70">
                   <time>{format(new Date(post.date), "MMMM d, yyyy")}</time>
                   {post.tags && post.tags.length > 0 && (
