@@ -35,7 +35,7 @@ export function HeroSection() {
         <div className="mt-8 space-y-5 max-w-xl font-ginto text-[15px] leading-relaxed text-white/80">
           <p>
             I&apos;m a computer science student, currently working at Taffi as
-            a software engineer.
+            a Software Engineer.
           </p>
 
           <p>
